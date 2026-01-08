@@ -136,7 +136,7 @@ public class ClassifiedMappingRemapper implements MappingRemapper {
 
     public String getUnmappedDesc(Mapping mapping, String unmappedNamespace, Object2ObjectOpenHashMap<String, UniDescriptorRemapper> map,
                                   ClassifiedMapping<NamespacedMapping> mappings) {
-        var desc = mapping.getComponent(Descriptor.Namespaced.class);
+        Descriptor.Namespaced desc = mapping.getComponent();
         if (desc != null) return unmappedNamespace.equals(desc.descriptorNamespace) ? desc.descriptor : map
                 .computeIfAbsent(desc.descriptorNamespace, (String n) -> new UniDescriptorRemapper(genMappingsByNamespaceMap(mappings.classes, n)))
                 .unmapMethodDesc(desc.descriptor);

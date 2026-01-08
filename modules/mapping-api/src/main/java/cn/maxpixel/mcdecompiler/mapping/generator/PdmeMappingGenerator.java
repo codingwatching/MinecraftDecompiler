@@ -76,7 +76,7 @@ public enum PdmeMappingGenerator implements MappingGenerator.Classified<PairedMa
                 synchronized (lines) {
                     lines.add(String.join(PARA, "Def", unmappedName, method.mappedName, NIL, NIL, doc));
                 }
-                var lvt = method.getComponent(LocalVariableTable.Paired.class);
+                LocalVariableTable.Paired lvt = method.getComponent();
                 if (lvt != null) {
                     IntIterator it = lvt.getLocalVariableIndexes().iterator();
                     while (it.hasNext()) {
@@ -123,7 +123,7 @@ public enum PdmeMappingGenerator implements MappingGenerator.Classified<PairedMa
     }
 
     private static String getDoc(PairedMapping m) {
-        var doc = m.getComponent(Documented.class);
+        Documented doc = m.getComponent();
         return doc != null ? doc.getContentString() : "";
     }
 

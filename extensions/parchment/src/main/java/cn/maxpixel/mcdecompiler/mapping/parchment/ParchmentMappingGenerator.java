@@ -101,7 +101,7 @@ public enum ParchmentMappingGenerator implements MappingGenerator.Classified<Pai
     }
 
     private static void writeParams(JsonWriter writer, @NotNull PairedMapping method) throws IOException {
-        var params = method.getComponent(LocalVariableTable.Paired.class);
+        LocalVariableTable.Paired params = method.getComponent();
         if (params != null && !params.isEmpty()) {
             writer.name(KEY_PARAMETERS).beginArray();
             for (var indexes = params.getLocalVariableIndexes().iterator(); indexes.hasNext(); ) {
@@ -112,7 +112,7 @@ public enum ParchmentMappingGenerator implements MappingGenerator.Classified<Pai
                         .jsonValue(Integer.toString(i))
                         .name(KEY_NAME)
                         .value(param.unmappedName);
-                Documented doc = param.getComponent(Documented.class);
+                Documented doc = param.getComponent();
                 if (doc != null && !doc.contents.isEmpty()) {
                     writer.name(KEY_JAVADOC).value(doc.getContentString());
                 }
@@ -123,7 +123,7 @@ public enum ParchmentMappingGenerator implements MappingGenerator.Classified<Pai
     }
 
     private static void writeDoc(PairedMapping m, JsonWriter writer) throws IOException {
-        Documented doc = m.getComponent(Documented.class);
+        Documented doc = m.getComponent();
         if (doc != null && !doc.contents.isEmpty()) {
             writer.name(KEY_JAVADOC)
                     .beginArray();

@@ -78,7 +78,7 @@ public enum ProguardMappingGenerator implements MappingGenerator.Classified<Pair
                 if (end > 1) args.deleteCharAt(args.length() - 1);
                 String ret = NamingUtil.descriptor2Java(mappedDesc.substring(end + 1));
                 if (method.hasComponent(LineNumber.class)) {
-                    LineNumber lineNumber = method.getComponent(LineNumber.class);
+                    LineNumber lineNumber = method.getComponent();
                     lines.add("    " + lineNumber.startLineNumber + ':' + lineNumber.endLineNumber + ':' +
                             ret + ' ' + method.mappedName + '(' + args + ") -> " + method.unmappedName);
                 } else {

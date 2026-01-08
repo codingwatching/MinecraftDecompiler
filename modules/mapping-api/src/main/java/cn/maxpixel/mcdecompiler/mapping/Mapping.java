@@ -52,43 +52,81 @@ public abstract class Mapping implements NameGetter {
     protected Mapping() {}
 
     /**
-     * Gets the component of given type if it is present.<br>
+     * Gets the component of the given type if it is present.<br>
      * For the {@link Owned} component, it is recommended to use {@link #getOwned()} instead of this method
      *
-     * @param component Given component type. Cannot be null
+     * @param component The given component type. Cannot be null
      * @return The component if exists, or {@code null}
      */
     @SuppressWarnings("unchecked")
-    public <C extends Component> C getComponent(@NotNull Class<? extends C> component) {
-        return (C) components.get(component);
+    public <C extends Component> C getComponent(@NotNull Class<C> component) {
+        return (C) components.get(Objects.requireNonNull(component));
     }
 
     /**
-     * Gets the component of given type if it is present, otherwise create a new component<br>
+     * Gets the component of given type if it is present.<br>
+     * For the {@link Owned} component, it is recommended to use {@link #getOwned()} instead of this method
      *
-     * @param component Given component type. Cannot be null
+     * @param type Used to obtain the component type. You needn't pass anything.
+     * @return The component if exists, or {@code null}
+     * @see #getComponent(Class)
+     */
+    @SuppressWarnings("unchecked")
+    public <C extends Component> C getComponent(C... type) {
+        return getComponent((Class<C>) type.getClass().getComponentType());
+    }
+
+    /**
+     * Gets the component of the given type if it is present, otherwise creates a new component<br>
+     *
+     * @param component The given component type. Cannot be null
      * @return The component if exists, or the newly created component
      */
     @SuppressWarnings("unchecked")
-    public <C extends Component> @NotNull C getOrCreateComponent(@NotNull Class<? extends C> component, @NotNull Supplier<? extends C> factory) {
-        var value = components.get(component);
+    public <C extends Component> @NotNull C getOrCreateComponent(@NotNull Class<C> component, @NotNull Supplier<C> factory) {
+        var value = components.get(Objects.requireNonNull(component));
         if (value == null) {
             value = Objects.requireNonNull(factory.get());
+            if (value.getClass() != component) throw new IllegalArgumentException("Type mismatch");
             components.put(component, value);
         }
         return (C) value;
     }
 
     /**
-     * Gets the component of given type.
+     * Gets the component of the given type if it is present, otherwise creates a new component<br>
+     *
+     * @param type Used to obtain the component type. You needn't pass anything.
+     * @return The component if exists, or the newly created component
+     */
+    @SuppressWarnings("unchecked")
+    public <C extends Component> @NotNull C getOrCreateComponent(@NotNull Supplier<C> factory, C... type) {
+        return getOrCreateComponent((Class<C>) type.getClass().getComponentType(), factory);
+    }
+
+    /**
+     * Gets the component of the given type.
      * <p>
      * For the {@link Owned} component, it is recommended to use {@link #getOwned()} instead of this method
      *
-     * @param component Given component type. Cannot be null
-     * @return The component
+     * @param component The given component type. Cannot be null
+     * @return The component optional
      */
-    public <C extends Component> @NotNull Optional<C> getComponentOptional(@NotNull Class<? extends C> component) {
+    public <C extends Component> @NotNull Optional<C> getComponentOptional(@NotNull Class<C> component) {
         return Optional.ofNullable(getComponent(component));
+    }
+
+    /**
+     * Gets the component of the given type.
+     * <p>
+     * For the {@link Owned} component, it is recommended to use {@link #getOwned()} instead of this method
+     *
+     * @param type Used to obtain the component type. You needn't pass anything.
+     * @return The component optional
+     */
+    @SuppressWarnings("unchecked")
+    public <C extends Component> @NotNull Optional<C> getComponentOptional(C... type) {
+        return getComponentOptional((Class<C>) type.getClass().getComponentType());
     }
 
     /**

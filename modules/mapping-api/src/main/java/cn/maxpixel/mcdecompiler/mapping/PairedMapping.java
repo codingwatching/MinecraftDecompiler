@@ -103,7 +103,7 @@ public class PairedMapping extends Mapping {
     @SuppressWarnings("unchecked")
     @Override
     public Owned<PairedMapping> getOwned() {
-        return getComponent(Owned.class);
+        return getComponent();
     }
 
     /**

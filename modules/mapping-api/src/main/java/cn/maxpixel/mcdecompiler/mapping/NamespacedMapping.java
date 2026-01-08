@@ -196,7 +196,7 @@ public class NamespacedMapping extends Mapping implements NameGetter.Namespace {
     @SuppressWarnings("unchecked")
     @Override
     public Owned<NamespacedMapping> getOwned() {
-        return getComponent(Owned.class);
+        return getComponent();
     }
 
     /**

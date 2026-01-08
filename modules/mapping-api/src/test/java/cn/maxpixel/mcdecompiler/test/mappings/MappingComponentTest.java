@@ -19,10 +19,7 @@
 package cn.maxpixel.mcdecompiler.test.mappings;
 
 import cn.maxpixel.mcdecompiler.mapping.Mapping;
-import cn.maxpixel.mcdecompiler.mapping.component.Component;
-import cn.maxpixel.mcdecompiler.mapping.component.Descriptor;
-import cn.maxpixel.mcdecompiler.mapping.component.Documented;
-import cn.maxpixel.mcdecompiler.mapping.component.Owned;
+import cn.maxpixel.mcdecompiler.mapping.component.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
@@ -102,6 +99,11 @@ class MappingComponentTest {
         assertEquals(3, m1.getComponents().size());
         assertTrue(m1.getComponents().containsAll(List.of(du1, dm1, owned)));
         assertSame(du1, m1.getComponent(Descriptor.Unmapped.class));
+        Descriptor.Unmapped du2 = m1.getComponent();
+        Descriptor.Mapped dm2 = m1.getComponent();
+        assertSame(du2, m1.getComponent(Descriptor.Unmapped.class));
+        assertSame(dm2, m1.getComponent(Descriptor.Mapped.class));
+        assertSame(du1, m1.<Descriptor.Unmapped>getComponent());
         assertSame(owned, m1.getOwned());
         assertNull(m1.getComponent(Documented.class));
         assertNull(m2.getOwned());
@@ -110,10 +112,16 @@ class MappingComponentTest {
         assertNotNull(m1.getComponentOptional(Descriptor.Unmapped.class));
         assertTrue(m1.getComponentOptional(Descriptor.Unmapped.class).isPresent());
         assertSame(du1, m1.getComponentOptional(Descriptor.Unmapped.class).get());
+        assertNotNull(m1.<Descriptor.Unmapped>getComponentOptional());
+        assertTrue(m1.<Descriptor.Unmapped>getComponentOptional().isPresent());
+        assertSame(du1, m1.<Descriptor.Unmapped>getComponentOptional().get());
         assertThrows(NullPointerException.class, () -> m1.getOrCreateComponent(Documented.class, () -> null));
         assertNotNull(m1.getOrCreateComponent(Documented.class, Documented::new));
         assertTrue(m1.hasComponent(Documented.class));
         assertNotNull(m1.getComponent(Documented.class));
+        assertNotNull(m1.getOrCreateComponent(LineNumber::new));
+        assertTrue(m1.hasComponent(LineNumber.class));
+        assertNotNull(m1.<LineNumber>getComponent());
     }
 
     @Test

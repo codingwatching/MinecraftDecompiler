@@ -84,7 +84,7 @@ public final class MappingUtils {
             if (!mapping.hasComponent(Owned.class) || !mapping.hasComponent(Descriptor.Namespaced.class))
                 throw new UnsupportedOperationException();
             checkOwner(mapping.getOwned(), cls);
-            Descriptor.Namespaced desc = mapping.getComponent(Descriptor.Namespaced.class);
+            Descriptor.Namespaced desc = mapping.getComponent();
             if (!namespace0.equals(desc.descriptorNamespace)) throw new IllegalArgumentException("Descriptor namespace mismatch");
             return desc.descriptor;
         }

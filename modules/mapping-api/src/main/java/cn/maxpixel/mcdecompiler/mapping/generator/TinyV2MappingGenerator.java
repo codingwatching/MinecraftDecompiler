@@ -57,7 +57,7 @@ public enum TinyV2MappingGenerator implements MappingGenerator.Classified<Namesp
         }
         for (ClassMapping<NamespacedMapping> cls : mappings.classes) {
             lines.add("c\t" + NamingUtil.concatNamespaces(namespaces, cls.mapping::getName, "\t"));
-            var classDoc = cls.mapping.getComponent(Documented.class);
+            Documented classDoc = cls.mapping.getComponent();
             if (classDoc != null) {
                 String content = classDoc.getContentString();
                 if (!content.isBlank()) lines.add("\tc\t" + TinyUtil.escape(content));
@@ -66,7 +66,7 @@ public enum TinyV2MappingGenerator implements MappingGenerator.Classified<Namesp
                 String desc = MappingUtils.Namespaced.checkTiny(namespace0, cls, field);
                 synchronized (lines) {
                     lines.add("\tf\t" + desc + '\t' + NamingUtil.concatNamespaces(namespaces, field::getName, "\t"));
-                    var fieldDoc = field.getComponent(Documented.class);
+                    Documented fieldDoc = field.getComponent();
                     if (fieldDoc != null) {
                         String doc = fieldDoc.getContentString();
                         if (!doc.isBlank()) lines.add("\t\tc\t" + TinyUtil.escape(doc));
@@ -77,13 +77,13 @@ public enum TinyV2MappingGenerator implements MappingGenerator.Classified<Namesp
                 String desc = MappingUtils.Namespaced.checkTiny(namespace0, cls, method);
                 synchronized (lines) {
                     lines.add("\tm\t" + desc + '\t' + NamingUtil.concatNamespaces(namespaces, method::getName, "\t"));
-                    var methodDoc = method.getComponent(Documented.class);
+                    Documented methodDoc = method.getComponent();
                     if (methodDoc != null) {
                         String doc = methodDoc.getContentString();
                         if (!doc.isBlank()) lines.add("\t\tc\t" + TinyUtil.escape(doc));
                     }
                     if (method.hasComponent(LocalVariableTable.Namespaced.class)) {
-                        LocalVariableTable.Namespaced lvt = method.getComponent(LocalVariableTable.Namespaced.class);
+                        LocalVariableTable.Namespaced lvt = method.getComponent();
                         boolean omittedThis = method.hasComponent(StaticIdentifiable.class) &&
                                 !method.getComponent(StaticIdentifiable.class).isStatic;
                         lvt.getLocalVariableIndexes().forEach(index -> {
@@ -93,7 +93,7 @@ public enum TinyV2MappingGenerator implements MappingGenerator.Classified<Namesp
                                 return MappingUtils.isStringNotBlank(name) ? name : "";
                             }, "\t");
                             lines.add("\t\tp\t" + index + '\t' + names);
-                            var paramDoc = localVariable.getComponent(Documented.class);
+                            Documented paramDoc = localVariable.getComponent();
                             if (paramDoc != null) {
                                 String doc = paramDoc.getContentString();
                                 if (!doc.isBlank()) lines.add("\t\t\tc\t" + TinyUtil.escape(doc));

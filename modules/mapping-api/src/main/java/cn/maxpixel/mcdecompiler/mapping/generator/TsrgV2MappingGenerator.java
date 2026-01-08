@@ -65,10 +65,10 @@ public enum TsrgV2MappingGenerator implements MappingGenerator.Classified<Namesp
                 synchronized (lines) {
                     genDescriptorLine(lines, namespace0, method, NamingUtil.concatNamespaces(namespaces,
                             method::getName, " "));
-                    var si = method.getComponent(StaticIdentifiable.class);
+                    StaticIdentifiable si = method.getComponent();
                     if (si != null && si.isStatic) lines.add("\t\tstatic");
                     if (method.hasComponent(LocalVariableTable.Namespaced.class)) {
-                        LocalVariableTable.Namespaced lvt = method.getComponent(LocalVariableTable.Namespaced.class);
+                        LocalVariableTable.Namespaced lvt = method.getComponent();
                         lvt.getLocalVariableIndexes().forEach(index -> {
                             String names = NamingUtil.concatNamespaces(namespaces, namespace -> {
                                 String name = lvt.getLocalVariable(index).getName(namespace);
@@ -89,7 +89,7 @@ public enum TsrgV2MappingGenerator implements MappingGenerator.Classified<Namesp
     }
 
     private static void genDescriptorLine(ObjectArrayList<String> lines, String namespace0, NamespacedMapping method, String names) {
-        Descriptor.Namespaced desc = method.getComponent(Descriptor.Namespaced.class);
+        Descriptor.Namespaced desc = method.getComponent();
         if (!namespace0.equals(desc.descriptorNamespace)) throw new IllegalArgumentException();
         int i = names.indexOf(' ');
         lines.add('\t' + names.substring(0, i + 1) + desc.descriptor + names.substring(i));
