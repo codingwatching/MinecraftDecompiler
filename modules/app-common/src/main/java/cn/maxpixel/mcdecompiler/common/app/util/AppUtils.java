@@ -42,7 +42,7 @@ public class AppUtils {
     }
 
     public static void waitFor(Process pro) {
-        Logger logger = LogManager.getLogger("Process PID: " + pro.pid());
+        Logger logger = LogManager.getLogger("cn.maxpixel.mcdecompiler.Process PID: " + pro.pid());
         try (BufferedReader in = pro.inputReader();
              BufferedReader err = pro.errorReader()) {
             Thread inT = new Thread(() -> {

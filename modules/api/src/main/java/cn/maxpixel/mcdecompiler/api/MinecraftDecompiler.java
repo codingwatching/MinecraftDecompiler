@@ -176,7 +176,7 @@ public class MinecraftDecompiler {// This class is not designed to be reusable
     }
 
     public static final class OptionBuilder {
-        private static final Logger LOGGER = LogManager.getLogger("Option Builder");
+        private static final Logger LOGGER = LogManager.getLogger();
         private String version;
         private SideType type;
         private boolean includeOthers = true;

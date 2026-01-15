@@ -49,7 +49,7 @@ public class MinecraftDecompilerCommandLine {
         System.setProperty("org.openjdk.java.util.stream.tripwire", Boolean.toString(Constants.IS_DEV));
     }
     private static final Object2ObjectOpenHashMap<Option, OptionSpec<?>> OPTION_MAP = new Object2ObjectOpenHashMap<>();
-    private static final Logger LOGGER = LogManager.getLogger("CommandLine");
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static void main(String[] args) throws Throwable {
         if (Constants.IS_DEV) LOGGER.info("MCD Begin");// Used to measure time

@@ -37,7 +37,7 @@ import java.util.jar.Manifest;
 
 public class Decompilers {
     private static final Manifest MANIFEST = JarUtil.getManifest(Decompilers.class);
-    private static final Logger LOGGER = LogManager.getLogger("Decompiler Manager");
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final Object2ObjectOpenHashMap<String, IDecompiler> DECOMPILERS = new Object2ObjectOpenHashMap<>();
     static {
         for (IDecompiler d : ServiceLoader.load(IDecompiler.class)) {

@@ -1,7 +1,7 @@
 {
   "loggers": {
-    "root": {
-      "level": "INFO"
+    "cn.maxpixel.mcdecompiler": {
+      "formatter": "[%time%] [%name%/%source_method%] [%level%] %msg%\n"
     }
   }
 }

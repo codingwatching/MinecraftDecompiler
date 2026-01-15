@@ -60,7 +60,7 @@ public class DownloadingUtil {
 
     public static final HttpClient HTTP_CLIENT = HttpClient.newBuilder()
             .proxy(new ProxySelector() {
-                private static final Logger LOGGER = LogManager.getLogger("Proxy");
+                private static final Logger LOGGER = LogManager.getLogger("cn.maxpixel.mcdecompiler.DownloadingUtil.Proxy");
                 private static final List<Proxy> PROXY_LIST = List.of(INTERNAL_PROXY);
                 @Override
                 public List<Proxy> select(URI uri) {

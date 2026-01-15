@@ -24,7 +24,7 @@ import cn.maxpixel.mcdecompiler.mapping.util.Validation;
 
 import java.util.Objects;
 
-public class Owned<T extends Mapping> implements Component {
+public class Owned<T extends Mapping> implements Component {// TODO: Remove this and directly use ClassMapping as the component
     public ClassMapping<T> owner;
 
     public Owned() {}
