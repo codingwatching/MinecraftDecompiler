@@ -71,8 +71,8 @@ public abstract class Deobfuscator<T extends MappingRemapper> {
                     .filter(p -> {
                         String ps = p.toString();
                         String k = AppUtils.file2Native(ps);
-                        return (deobfAll && ps.endsWith(".class")) || remapper.hasClassMapping(k) ||
-                                (extraClassesNotEmpty && extraClasses.stream().anyMatch(k::startsWith));
+                        return ps.endsWith(".class") && (deobfAll || remapper.hasClassMapping(k) ||
+                                (extraClassesNotEmpty && extraClasses.stream().anyMatch(k::startsWith)));
                     }), true);
             options.extraJars.forEach(jar -> {
                 try (FileSystem jarFs = JarUtil.createZipFs(jar);
@@ -89,8 +89,8 @@ public abstract class Deobfuscator<T extends MappingRemapper> {
                 try {
                     String pathString = path.toString();
                     String classKeyName = AppUtils.file2Native(pathString);
-                    if ((deobfAll && pathString.endsWith(".class")) || remapper.hasClassMapping(classKeyName) ||
-                            (extraClassesNotEmpty && extraClasses.stream().anyMatch(classKeyName::startsWith))) {
+                    if (pathString.endsWith(".class") && (deobfAll || remapper.hasClassMapping(classKeyName) ||
+                            (extraClassesNotEmpty && extraClasses.stream().anyMatch(classKeyName::startsWith)))) {
                         ClassReader reader = new ClassReader(IOUtil.readAllBytes(path));
                         ClassWriter writer = new ClassWriter(0);
                         String s = remapper.mapClass(classKeyName);
